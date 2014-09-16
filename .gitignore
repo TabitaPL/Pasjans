@@ -1,0 +1,24 @@
+# no .a files
+*.a
+*.dll
+*.lib
+*.log
+# ignore all files in directories
+Angel-3.2/Code/Build/
+Angel-3.2/Code/ClientGame/
+Angel-3.2/Code/IntroGame/
+Angel-3.2/Code/GameJam*/
+Angel-3.2/Code/GameJam.sln
+Angel-3.2/.gitignore
+Angel-3.2/.hgignore
+#other not needed
+*.suo
+*.ncb
+*.user
+*.xcodeproj/*.mode1v*
+*.xcodeproj/*.pbxuser
+*.xcodeproj/TemplateIcon.icns
+*.xcodeproj/project.xcworkspace/xcuserdata/*.xcuserdatad
+*.xcodeproj/xcuserdata/*.xcuserdatad
+*.xcworkspace/xcuserdata/*.xcuserdatad
+*.xcworkspace/xcuserdata/*.xcuserdatad
