@@ -48,3 +48,5 @@ Angel-3.2/Code/Angel/Libraries/gwen/Projects/linux/gmake/obj/
 Angel-3.2/Code/Angel/Scripting/Interfaces/AngelLuaWrapping.cpp
 Angel-3.2/Code/Angel/Scripting/Interfaces/inheritance.i
 Angel-3.2/Code/Tools/BuildScripts/build_cache/swigout.txt
+
+Angel-3.2/Build/
