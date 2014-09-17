@@ -1,5 +1,7 @@
 # no .a files
 *.a
+*.o
+*.lo
 *.dll
 *.lib
 *.log
@@ -11,6 +13,7 @@ Angel-3.2/Code/GameJam*/
 Angel-3.2/Code/GameJam.sln
 Angel-3.2/.gitignore
 Angel-3.2/.hgignore
+Angel-3.2/Code/build-*/
 #other not needed
 *.suo
 *.ncb
@@ -22,3 +25,26 @@ Angel-3.2/.hgignore
 *.xcodeproj/xcuserdata/*.xcuserdatad
 *.xcworkspace/xcuserdata/*.xcuserdatad
 *.xcworkspace/xcuserdata/*.xcuserdatad
+
+# specific files from Angel build to ignore.
+Angel-3.2/Code/Angel/Libraries/Box2D-2.2.1/Build/Box2D/
+Angel-3.2/Code/Angel/Libraries/Box2D-2.2.1/Build/CMakeCache.txt
+Angel-3.2/Code/Angel/Libraries/Box2D-2.2.1/Build/CMakeFiles/
+Angel-3.2/Code/Angel/Libraries/Box2D-2.2.1/Build/HelloWorld/
+Angel-3.2/Code/Angel/Libraries/Box2D-2.2.1/Build/Makefile
+Angel-3.2/Code/Angel/Libraries/Box2D-2.2.1/Build/Testbed/
+Angel-3.2/Code/Angel/Libraries/Box2D-2.2.1/Build/cmake_install.cmake
+Angel-3.2/Code/Angel/Libraries/Box2D-2.2.1/Build/freeglut/
+Angel-3.2/Code/Angel/Libraries/Box2D-2.2.1/Build/glui/
+Angel-3.2/Code/Angel/Libraries/FTGL/unix/Make.conf
+Angel-3.2/Code/Angel/Libraries/FTGL/unix/config.status
+Angel-3.2/Code/Angel/Libraries/FTGL/unix/docs/doc-stamp
+Angel-3.2/Code/Angel/Libraries/FTGL/unix/ftgl.pc
+Angel-3.2/Code/Angel/Libraries/FTGL/unix/libtool
+Angel-3.2/Code/Angel/Libraries/FTGL/unix/src/.libs/
+Angel-3.2/Code/Angel/Libraries/FTGL/unix/src/libftgl.la
+Angel-3.2/Code/Angel/Libraries/angel-lua-build/lua
+Angel-3.2/Code/Angel/Libraries/gwen/Projects/linux/gmake/obj/
+Angel-3.2/Code/Angel/Scripting/Interfaces/AngelLuaWrapping.cpp
+Angel-3.2/Code/Angel/Scripting/Interfaces/inheritance.i
+Angel-3.2/Code/Tools/BuildScripts/build_cache/swigout.txt
