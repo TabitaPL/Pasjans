@@ -8,11 +8,10 @@
 class SolitaireLogic
 {
 public:
-  SolitaireLogic();
+    SolitaireLogic();
 
 private:
-  std::vector<Card> m_cards[4];
-
+    std::vector<Card> m_cards[4];
 };
 
 #endif // SOLITAIRELOGIC_H
