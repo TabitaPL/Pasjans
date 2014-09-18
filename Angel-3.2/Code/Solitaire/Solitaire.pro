@@ -5,6 +5,7 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
             ../Angel/Scripting/Interfaces/AngelLuaWrapping.cpp \
+    solitairelogic.cpp
 
 resources.files = Resources/*
 resources.path  = $$OUT_PWD/Resources/
@@ -32,3 +33,6 @@ LIBS += -L$$PWD/../Angel/ \
 QMAKE_CXXFLAGS += -std=gnu++11
 
 DEPENDPATH += ../Angel/Libraries/FMOD
+
+HEADERS += \
+    solitairelogic.h
