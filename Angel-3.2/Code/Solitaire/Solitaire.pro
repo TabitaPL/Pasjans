@@ -5,6 +5,9 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
             ../Angel/Scripting/Interfaces/AngelLuaWrapping.cpp \
+    board.cpp \
+    game.cpp \
+    card.cpp
 
 resources.files = Resources/*
 resources.path  = $$OUT_PWD/Resources/
@@ -32,3 +35,8 @@ LIBS += -L$$PWD/../Angel/ \
 QMAKE_CXXFLAGS += -std=gnu++11
 
 DEPENDPATH += ../Angel/Libraries/FMOD
+
+HEADERS += \
+    board.h \
+    game.h \
+    card.h
