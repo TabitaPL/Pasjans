@@ -3,9 +3,19 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 
-SOURCES += main.cpp \
-            ../Angel/Scripting/Interfaces/AngelLuaWrapping.cpp \
+SOURCES += \
+	main.cpp \
+    ../Angel/Scripting/Interfaces/AngelLuaWrapping.cpp \
+    board.cpp \
+    game.cpp \
+    card.cpp \
     solitairelogic.cpp
+
+HEADERS += \
+    board.h \
+    game.h \
+    card.h \
+    solitairelogic.h
 
 resources.files = Resources/*
 resources.path  = $$OUT_PWD/Resources/
@@ -33,6 +43,3 @@ LIBS += -L$$PWD/../Angel/ \
 QMAKE_CXXFLAGS += -std=gnu++11
 
 DEPENDPATH += ../Angel/Libraries/FMOD
-
-HEADERS += \
-    solitairelogic.h
