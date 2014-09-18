@@ -5,6 +5,7 @@
 *.dll
 *.lib
 *.log
+*.orig
 # ignore all files in directories
 Angel-3.2/Code/Build/
 Angel-3.2/Code/ClientGame/

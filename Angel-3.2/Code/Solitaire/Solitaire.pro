@@ -4,17 +4,15 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-	main.cpp \
+    main.cpp \
     ../Angel/Scripting/Interfaces/AngelLuaWrapping.cpp \
     board.cpp \
     game.cpp \
-    card.cpp \
     solitairelogic.cpp
 
 HEADERS += \
     board.h \
     game.h \
-    card.h \
     solitairelogic.h
 
 resources.files = Resources/*
