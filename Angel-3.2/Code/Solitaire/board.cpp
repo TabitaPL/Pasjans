@@ -1,7 +1,7 @@
 #include "board.h"
 #include "game.h"
 
-Board::Board()
+Board::Board(): nameOfClickedCard("")
 {
     theWorld.Initialize(800, 600, "Solitaire", false, false, false);
 
@@ -42,4 +42,36 @@ void Board::drawCards()
             card->SetPosition(cardWidth + bottomLeft.X + i * cardWidth + i * 2.6f/13.0f, topLeft.Y - cardHeight - j * cardHeight - j * 1.0f);
             theWorld.Add(card);
         }
+}
+
+void Board::MouseDownEvent(Vec2i screenCoordinates, MouseButtonInput button)
+{
+    Vector2 clickedPlace = MathUtil::ScreenToWorld(screenCoordinates.X, screenCoordinates.Y);
+    ActorSet cards = theTagList.GetObjectsTagged("card");
+
+    for (Actor* a : cards )
+    {
+        BoundingBox bbox = a->GetBoundingBox();
+        if ( bbox.Intersects(clickedPlace, 0) )
+        {
+            if (nameOfClickedCard == "")
+            {
+                nameOfClickedCard = a->GetName();
+                a->SetSprite("Resources/Images/angel.png");
+            }
+            else
+            {
+                Actor *previous = Actor::GetNamed(nameOfClickedCard);
+                sysLog.Log("Previous name: " + previous->GetName());
+                sysLog.Log("Current name: " + a->GetName());
+                //swap graphic of previous and a
+                previous->MoveTo(a->GetPosition(), 2.0);
+                a->MoveTo(previous->GetPosition(), 2.0);
+                nameOfClickedCard = "";
+                previous = NULL;
+                break;
+            }
+            break;
+        }
+    }
 }

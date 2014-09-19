@@ -11,23 +11,6 @@ Game::~Game()
     theWorld.Destroy();
 }
 
-void Game::MouseDownEvent(Vec2i screenCoordinates, MouseButtonInput button)
-{
-    Vector2 clickedPlace = MathUtil::ScreenToWorld(screenCoordinates.X, screenCoordinates.Y);
-    ActorSet cards = theTagList.GetObjectsTagged("card");
-    String name = "";
-    for (Actor* a : cards )
-    {
-        BoundingBox bbox = a->GetBoundingBox();
-        if ( bbox.Intersects(clickedPlace, 0) )
-        {
-            name = a->GetName();
-            a->SetSprite("Resources/Images/angel.png");
-            break;
-        }
-    }
-}
-
 /*static*/ void Game::start()
 {
     sysLog.Log("Start of the game");

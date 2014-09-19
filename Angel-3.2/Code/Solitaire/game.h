@@ -5,15 +5,12 @@
 
 #define theGame Game::getInstance()
 
-class Game : public MouseListener
+class Game : GameManager
 {
 public:
     void start();
     static Game& getInstance();
     ~Game();
-
-    virtual void MouseDownEvent(Vec2i screenCoordinates, MouseButtonInput button);
-    //virtual void MouseMotionEvent(Vec2i screenCoordinates);
 
 private:
     Game();
