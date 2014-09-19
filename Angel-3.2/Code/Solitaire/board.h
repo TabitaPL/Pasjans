@@ -18,7 +18,9 @@ public:
 
     virtual void MouseDownEvent(Vec2i screenCoordinates, MouseButtonInput button);
 private:
-    String nameOfClickedCard;
+    String _nameOfClickedCard;
+    std::vector<Renderable*> _objects; //all of objects on board
+
 };
 
 #endif // BOARD_H
