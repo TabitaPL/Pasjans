@@ -26,22 +26,21 @@ void Board::drawCards()
 
     float screenWeidth = topRight.X + MathUtil::Abs(topLeft.X);
 
-    float cardWeidth = screenWeidth / (13.0f + screenWeidth * 0.1);
-    float cardHeight = cardWeidth / 0.65f;
+    float cardWidth = screenWeidth / (13.0f + screenWeidth * 0.1);
+    float cardHeight = cardWidth / 0.65f;
 
 
-    sysLog.Log("cardWeidth: " + std::to_string(cardWeidth) + " " + std::to_string(cardHeight));
-    sysLog.Log("minVec: " + std::to_string(topRight.X) + " " + std::to_string(topLeft.X));
+//    sysLog.Log("cardWeidth: " + std::to_string(cardWidth) + " " + std::to_string(cardHeight));
+//    sysLog.Log("minVec: " + std::to_string(topRight.X) + " " + std::to_string(topLeft.X));
     for (int i = 0; i < 13; i++) //columns
         for (int j = 0; j < 4; j++)
         {
             Actor *card = new Actor();
             card->SetName("Card");
-            card->SetColor(0.50f, 0.0f, 0.16f);
-            card->SetSize(cardWeidth, cardHeight);
+            card->SetColor(0.5f, 0.2f, 0.8f);
+            card->SetSize(cardWidth, cardHeight);
             card->SetDrawShape(ADS_Square);
-            card->SetPosition(cardWeidth + bottomLeft.X + i * cardWeidth + i * 2.6f/13.0f, topLeft.Y - cardHeight - j * cardHeight - j * 1.0f);
-//            card->SetPosition(bottomLeft.X + i * 1.5 + i * 0.5f, topLeft.Y - j * 2.0 - j * 0.5f);
+            card->SetPosition(cardWidth + bottomLeft.X + i * cardWidth + i * 2.6f/13.0f, topLeft.Y - cardHeight - j * cardHeight - j * 1.0f);
             theWorld.Add(card);
         }
 }

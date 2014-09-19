@@ -8,14 +8,12 @@ SOURCES += \
     ../Angel/Scripting/Interfaces/AngelLuaWrapping.cpp \
     board.cpp \
     game.cpp \
-    solitairelogic.cpp \
-    card.cpp
+    solitairelogic.cpp
 
 HEADERS += \
     board.h \
     game.h \
-    solitairelogic.h \
-    card.h
+    solitairelogic.h
 
 resources.files = Resources/*
 resources.path  = $$OUT_PWD/Resources/
