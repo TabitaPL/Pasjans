@@ -1,5 +1,8 @@
 #include <random>
 #include <time.h>
+#include <algorithm>
+#include <iterator>
+#include <iostream>
 #include "solitairelogic.h"
 
 SolitaireLogic::SolitaireLogic()
@@ -9,13 +12,15 @@ SolitaireLogic::SolitaireLogic()
     for (int i = 0; i < int(Card::Type::COUNT); i++)
         for (int j = 0; j < int(Card::Value::COUNT); j++)
            m_deck.push_back(Card(Card::Type(i), Card::Value(j)));
-
-    for (int i = 0; i < 4; i++)
-        m_cards[i] = &
 }
 
 void SolitaireLogic::setNewBoard()
 {
-    // basically we need to shuffle our m_deck
-    // and divide it in 4 to set m_cards
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(m_deck.begin(), m_deck.end(), g);
+
+    for (int i = 0; i < int(Card::Type::COUNT); i++)
+        for (int j = 0; j < int(Card::Value::COUNT); j++)
+           m_cards[i].push_back(m_deck[i * int(Card::Value::COUNT) + j]);
 }
