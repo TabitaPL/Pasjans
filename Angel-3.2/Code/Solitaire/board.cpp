@@ -29,15 +29,14 @@ void Board::drawCards()
     float cardWidth = screenWeidth / (13.0f + screenWeidth * 0.1);
     float cardHeight = cardWidth / 0.65f;
 
-
 //    sysLog.Log("cardWeidth: " + std::to_string(cardWidth) + " " + std::to_string(cardHeight));
-//    sysLog.Log("minVec: " + std::to_string(topRight.X) + " " + std::to_string(topLeft.X));
     for (int i = 0; i < 13; i++) //columns
         for (int j = 0; j < 4; j++)
         {
             Actor *card = new Actor();
             card->SetName("Card");
-            card->SetColor(0.5f, 0.2f, 0.8f);
+            card->Tag("card");
+            card->SetSprite("Resources/Images/Deck/Back_SunFlower.png");
             card->SetSize(cardWidth, cardHeight);
             card->SetDrawShape(ADS_Square);
             card->SetPosition(cardWidth + bottomLeft.X + i * cardWidth + i * 2.6f/13.0f, topLeft.Y - cardHeight - j * cardHeight - j * 1.0f);
