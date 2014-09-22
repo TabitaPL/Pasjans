@@ -5,21 +5,18 @@
 Board::Board(): _nameOfClickedCard("")
 {
     theWorld.Initialize(1024, 768, "Solitaire", false, false, false);
-
-    //YOUR GAME SETUP CODE HERE
     theWorld.SetBackgroundColor(Color(0.0f, 0.60f, 0.16f));
     drawCards();
 }
 
 Board::~Board()
 {
-    std::vector<Renderable*>::iterator it = _objects.begin();
-        while(_objects.end() != it)
-        {
-            (*it)->Destroy();
-            it++;
-        }
-        _objects.clear();
+    while (!_objects.empty())
+    {
+        _objects.back()->Destroy();
+        delete _objects.back();
+        _objects.pop_back();
+    }
 }
 
 void Board::drawCards()
@@ -64,10 +61,11 @@ void Board::setCards(std::vector<Card> *cards)
            if (currentLogicCard != allLogicCards.end())
            {
                sysLog.Log("Card: " + (*currentLogicCard).toString());
-               std::string tmp = Card::toString((*currentLogicCard).m_type) + "/" + (*currentLogicCard).getFileName();
-               card->SetSprite("Resources/Images/Deck/" + Card::toString((*currentLogicCard).m_type) + "/" + (*currentLogicCard).getFileName() );
+               card->SetSprite("Resources/Images/Deck/" + Card::toString((*currentLogicCard).type) + "/" + (*currentLogicCard).getFileName() );
+               currentLogicCard++;
            }
-           currentLogicCard++;
+           else
+               break;
        }
 }
 
@@ -79,24 +77,28 @@ void Board::MouseDownEvent(Vec2i screenCoordinates, MouseButtonInput button)
     for (Actor* a : cards )
     {
         BoundingBox bbox = a->GetBoundingBox();
+        Color currentColor;
         if ( bbox.Intersects(clickedPlace, 0) )
         {
             if (_nameOfClickedCard == "")
             {
                 _nameOfClickedCard = a->GetName();
-                a->SetSprite("Resources/Images/angel.png");
+                //sysLog.Log("Card " + _nameOfClickedCard + " was clicked");
+                a->SetColor(Color(0.0, 0.0, 1.0));
             }
             else
             {
                 Actor *previous = Actor::GetNamed(_nameOfClickedCard);
+                //sysLog.Log("Swap " + _nameOfClickedCard + " and " + a->GetName());
                 //swap graphic of previous and a
-                previous->MoveTo(a->GetPosition(), 1.0);
-                a->MoveTo(previous->GetPosition(), 1.0);
-                _nameOfClickedCard = "";
-
                 if (previous != nullptr)
-                    delete previous;
-                previous = nullptr;
+                {
+                    previous->MoveTo(a->GetPosition(), 1.0);
+                    a->MoveTo(previous->GetPosition(), 1.0);
+                    _nameOfClickedCard = "";
+                    previous->SetColor(Color(1.0, 1.0, 1.0));
+                }
+
                 break;
             }
             break;

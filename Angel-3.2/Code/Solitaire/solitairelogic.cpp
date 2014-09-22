@@ -14,17 +14,19 @@ SolitaireLogic::SolitaireLogic()
            m_deck.push_back(Card(Card::Type(i), Card::Value(j)));
 }
 
-void SolitaireLogic::setNewBoard()
+void SolitaireLogic::setNewBoard(MoveInfo &moveInfo)
 {
-    for (auto row : m_cards)
-        row.clear();
     std::random_device rd;
     std::mt19937 g(rd());
     std::shuffle(m_deck.begin(), m_deck.end(), g);
 
     for (int i = 0; i < int(Card::Type::COUNT); i++)
         for (int j = 0; j < int(Card::Value::COUNT); j++)
-            m_cards[i].push_back(m_deck[i * int(Card::Value::COUNT) + j]);
+        {
+            int offset = i * int(Card::Value::COUNT) + j;
+            m_cards[i].push_back(m_deck[offset]);
+            moveInfo.addCreation(Creation(i, j, m_deck[offset]));
+        }
 }
 
 std::vector<Card> *SolitaireLogic::getCards()

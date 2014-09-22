@@ -18,7 +18,7 @@ Game::~Game()
 {
     sysLog.Log("Start of the game");
     _board = new Board();
-    _slogic.setNewBoard();
+    _slogic.setNewBoard(moveInfo);
     std::vector<Card> * cards = _slogic.getCards();
     _board->setCards(cards);
 

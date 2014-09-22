@@ -19,6 +19,7 @@ private:
     Game();
     Board* _board;
     SolitaireLogic _slogic;
+    MoveInfo moveInfo;
 };
 
 #endif // GAME_H
