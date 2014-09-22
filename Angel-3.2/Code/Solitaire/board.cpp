@@ -12,13 +12,12 @@ Board::Board(): _nameOfClickedCard("")
 
 Board::~Board()
 {
-    std::vector<Renderable*>::iterator it = _objects.begin();
-        while(_objects.end() != it)
-        {
-            (*it)->Destroy();
-            it++;
-        }
-        _objects.clear();
+    while (!_objects.empty())
+    {
+        _objects.back()->Destroy();
+        delete _objects.back();
+        _objects.pop_back();
+    }
 }
 
 void Board::drawCards()
