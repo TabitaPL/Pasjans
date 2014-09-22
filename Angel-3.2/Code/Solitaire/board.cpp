@@ -4,8 +4,6 @@
 Board::Board(): _nameOfClickedCard("")
 {
     theWorld.Initialize(1024, 768, "Solitaire", false, false, false);
-
-    //YOUR GAME SETUP CODE HERE
     theWorld.SetBackgroundColor(Color(0.0f, 0.60f, 0.16f));
     drawCards();
 }
