@@ -3,6 +3,7 @@
 
 #include <Angel.h>
 
+class Card;
 /*
  * This class is responsible for:
  * 1) drawing background
@@ -15,6 +16,7 @@ public:
     Board();
     ~Board();
     void drawCards();
+    void setCards(std::vector<Card>* cards);
 
     virtual void MouseDownEvent(Vec2i screenCoordinates, MouseButtonInput button);
 private:

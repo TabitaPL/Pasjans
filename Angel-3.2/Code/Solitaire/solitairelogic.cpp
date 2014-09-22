@@ -16,11 +16,18 @@ SolitaireLogic::SolitaireLogic()
 
 void SolitaireLogic::setNewBoard()
 {
+    for (auto row : m_cards)
+        row.clear();
     std::random_device rd;
     std::mt19937 g(rd());
     std::shuffle(m_deck.begin(), m_deck.end(), g);
 
     for (int i = 0; i < int(Card::Type::COUNT); i++)
         for (int j = 0; j < int(Card::Value::COUNT); j++)
-           m_cards[i].push_back(m_deck[i * int(Card::Value::COUNT) + j]);
+            m_cards[i].push_back(m_deck[i * int(Card::Value::COUNT) + j]);
+}
+
+std::vector<Card> *SolitaireLogic::getCards()
+{
+    return m_cards;
 }

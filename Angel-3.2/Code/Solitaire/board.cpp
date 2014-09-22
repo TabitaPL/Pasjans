@@ -1,5 +1,6 @@
 #include "board.h"
 #include "game.h"
+#include "solitairelogic.h"
 
 Board::Board(): _nameOfClickedCard("")
 {
@@ -48,6 +49,28 @@ void Board::drawCards()
         }
 }
 
+void Board::setCards(std::vector<Card> *cards)
+{
+    std::vector<Card> allLogicCards;
+
+    //concatenate all 4 rows into one
+    for (int i = 0; i < 4; i++)
+        allLogicCards.insert(allLogicCards.end(), cards[i].begin(), cards[i].end());
+
+    auto currentLogicCard = allLogicCards.begin();
+    ActorSet actorCardsOnBoard = theTagList.GetObjectsTagged("card");
+    for (Actor* card : actorCardsOnBoard)
+       {
+           if (currentLogicCard != allLogicCards.end())
+           {
+               sysLog.Log("Card: " + (*currentLogicCard).toString());
+               std::string tmp = Card::toString((*currentLogicCard).m_type) + "/" + (*currentLogicCard).getFileName();
+               card->SetSprite("Resources/Images/Deck/" + Card::toString((*currentLogicCard).m_type) + "/" + (*currentLogicCard).getFileName() );
+           }
+           currentLogicCard++;
+       }
+}
+
 void Board::MouseDownEvent(Vec2i screenCoordinates, MouseButtonInput button)
 {
     Vector2 clickedPlace = MathUtil::ScreenToWorld(screenCoordinates.X, screenCoordinates.Y);
@@ -70,8 +93,10 @@ void Board::MouseDownEvent(Vec2i screenCoordinates, MouseButtonInput button)
                 previous->MoveTo(a->GetPosition(), 1.0);
                 a->MoveTo(previous->GetPosition(), 1.0);
                 _nameOfClickedCard = "";
-                previous = NULL;
-                delete previous;
+
+                if (previous != nullptr)
+                    delete previous;
+                previous = nullptr;
                 break;
             }
             break;
