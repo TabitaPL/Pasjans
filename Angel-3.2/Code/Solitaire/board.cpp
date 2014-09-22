@@ -60,7 +60,6 @@ void Board::setCards(std::vector<Card> *cards)
        {
            if (currentLogicCard != allLogicCards.end())
            {
-               sysLog.Log("Card: " + (*currentLogicCard).toString());
                card->SetSprite("Resources/Images/Deck/" + Card::toString((*currentLogicCard).type) + "/" + (*currentLogicCard).getFileName() );
                currentLogicCard++;
            }
@@ -74,31 +73,27 @@ void Board::MouseDownEvent(Vec2i screenCoordinates, MouseButtonInput button)
     Vector2 clickedPlace = MathUtil::ScreenToWorld(screenCoordinates.X, screenCoordinates.Y);
     ActorSet cards = theTagList.GetObjectsTagged("card");
 
-    for (Actor* a : cards )
+    for (Actor* card : cards )
     {
-        BoundingBox bbox = a->GetBoundingBox();
-        Color currentColor;
-        if ( bbox.Intersects(clickedPlace, 0) )
+        BoundingBox boundingBox = card->GetBoundingBox();
+        if (boundingBox.Intersects(clickedPlace, 0))
         {
             if (_nameOfClickedCard == "")
             {
-                _nameOfClickedCard = a->GetName();
-                //sysLog.Log("Card " + _nameOfClickedCard + " was clicked");
-                a->SetColor(Color(0.0, 0.0, 1.0));
+                _nameOfClickedCard = card->GetName();
+                card->SetColor(Color(0.0, 0.0, 1.0));
             }
             else
             {
                 Actor *previous = Actor::GetNamed(_nameOfClickedCard);
-                //sysLog.Log("Swap " + _nameOfClickedCard + " and " + a->GetName());
                 //swap graphic of previous and a
                 if (previous != nullptr)
                 {
-                    previous->MoveTo(a->GetPosition(), 1.0);
-                    a->MoveTo(previous->GetPosition(), 1.0);
+                    previous->MoveTo(card->GetPosition(), 1.0);
+                    card->MoveTo(previous->GetPosition(), 1.0);
                     _nameOfClickedCard = "";
                     previous->SetColor(Color(1.0, 1.0, 1.0));
                 }
-
                 break;
             }
             break;
