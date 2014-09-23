@@ -35,8 +35,7 @@ struct Card
     {}
     static std::string toString(Type t);
     static std::string toString(Value v);
-    std::string toString();
-    std::string getFileName();
+    std::string toString() const;
 
     Type type;
     Value value;

@@ -1,72 +1,67 @@
 #include "board.h"
 #include "game.h"
 #include "solitairelogic.h"
+#include "cardcontroller.h"
 
-Board::Board(): _nameOfClickedCard("")
+Board::Board()
+    : _nameOfClickedCard("")
+    , _cards(int(Card::Type::COUNT), std::vector<CardController*>(int(Card::Value::COUNT)))
 {
+    for (int i = 0; i < _cards.size(); i++)
+        for (int j = 0; j < _cards[i].size(); j++)
+            _cards[i][j] = nullptr;
+
     registerCardFilenames();
     theWorld.Initialize(1024, 768, "Solitaire", false, false, false);
     theWorld.SetBackgroundColor(Color(0.0f, 0.60f, 0.16f));
-    drawCards();
 }
 
 Board::~Board()
 {
-    while (!_objects.empty())
-    {
-        _objects.back()->Destroy();
-        delete _objects.back();
-        _objects.pop_back();
-    }
-}
-
-void Board::drawCards()
-{
-    Vector2 topRight = theCamera.GetWorldMaxVertex();
-    Vector2 bottomLeft = theCamera.GetWorldMinVertex();
-    Vector2 topLeft (bottomLeft.X, topRight.Y);
-    //Vector2 bottomRight (topRight.X, bottomLeft.Y);
-
-    float screenWeidth = topRight.X + MathUtil::Abs(topLeft.X);
-
-    float cardWidth = screenWeidth / (14.0f + screenWeidth * 0.1);
-    float cardHeight = cardWidth / 0.65f;
-
-    for (int i = 0; i < 14; i++) //columns
-        for (int j = 0; j < 4; j++)
+    for (int i = 0; i < _cards.size(); i++)
+        for (int j = 0; j < _cards[i].size(); j++)
         {
-            Actor *card = new Actor();
-            card->SetName("Card");
-            card->Tag("card");
-            card->SetSprite("Resources/Images/Deck/Back_SunFlower.png");
-            card->SetSize(cardWidth, cardHeight);
-            card->SetDrawShape(ADS_Square);
-            card->SetPosition(cardWidth + bottomLeft.X + i * cardWidth + i * 2.6f/14.0f, topLeft.Y - cardHeight - j * cardHeight - j * 1.0f);
-            theWorld.Add(card);
-            _objects.push_back(card);
+            _cards[i][j]->Destroy();
+            delete _cards[i][j];
         }
 }
 
-void Board::setCards(std::vector<Card> *cards)
+void Board::parseMoveInfo(const MoveInfo& moveInfo)
 {
-    std::vector<Card> allLogicCards;
+    for (auto& c : moveInfo.getCreations())
+    {
+        if (_cards[c.position.row][c.position.offset] != nullptr)
+            sysLog.Log("Creating card on top of a previous one.");
+        else
+            _cards[c.position.row][c.position.offset] =
+                    new CardController();
 
-    //concatenate all 4 rows into one
-    for (int i = 0; i < 4; i++)
-        allLogicCards.insert(allLogicCards.end(), cards[i].begin(), cards[i].end());
+        CardController* cc = _cards[c.position.row][c.position.offset];
+        cc->setCard(c.card);
+        std::stringstream ss;
+        ss << c.card.toString() << " (" << c.position.row << "," << c.position.offset << ")";
+        sysLog.Log(ss.str());
 
-    auto currentLogicCard = allLogicCards.begin();
-    ActorSet actorCardsOnBoard = theTagList.GetObjectsTagged("card");
-    for (Actor* card : actorCardsOnBoard)
-       {
-           if (currentLogicCard != allLogicCards.end())
-           {
-               card->SetSprite(_cardsRegistry[Card((*currentLogicCard).type, (*currentLogicCard).value)]);
-               currentLogicCard++;
-           }
-           else
-               break;
-       }
+        cc->SetName("Card");
+        cc->Tag("card");
+        cc->SetSprite(_cardsRegistry[c.card]);
+
+        // I don't like it. TODO:
+        // we should calculate those in window resize handler and keep stored.
+        Vector2 topRight = theCamera.GetWorldMaxVertex();
+        Vector2 bottomLeft = theCamera.GetWorldMinVertex();
+        Vector2 topLeft (bottomLeft.X, topRight.Y);
+        float screenWidth = topRight.X + MathUtil::Abs(topLeft.X);
+        float cardWidth = screenWidth / (14.0f + screenWidth * 0.1);
+        float cardHeight = cardWidth / 0.65f;
+        cc->SetSize(cardWidth, cardHeight);
+
+        cc->SetDrawShape(ADS_Square);
+        // TODO: get rid of magic numbers
+        cc->SetPosition(cardWidth + bottomLeft.X + c.position.offset * cardWidth + c.position.offset * 2.6f/14.0f,
+                        topLeft.Y - cardHeight - c.position.row * cardHeight - c.position.row * 1.0f);
+        theWorld.Add(cc);
+    }
 }
 
 void Board::MouseDownEvent(Vec2i screenCoordinates, MouseButtonInput button)

@@ -56,44 +56,7 @@
     }
 }
 
-std::string Card::toString()
+std::string Card::toString() const
 {
-    return toString(type) + " " + toString(value);
-}
-
-std::string Card::getFileName()
-{
-    switch (value)
-    {
-        case Value::TWO :
-            return "2.png";
-        case Value::THREE :
-            return "3.png";
-        case Value::FOUR :
-            return "4.png";
-        case Value::FIVE :
-            return "5.png";
-        case Value::SIX :
-            return "6.png";
-        case Value::SEVEN :
-            return "7.png";
-        case Value::EIGHT :
-            return "8.png";
-        case Value::NINE :
-            return "9.png";
-        case Value::TEN :
-            return "10.png";
-        case Value::JACK :
-            return "J.png";
-        case Value::QUEEN :
-            return "Q.png";
-        case Value::KING :
-            return "K.png";
-        case Value::ACE :
-            return "A.png";
-        case Value::COUNT :
-            return "";
-        default:
-            return "";
-    }
+    return Card::toString(type) + " " + Card::toString(value);
 }

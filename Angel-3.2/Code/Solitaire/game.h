@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <Angel.h>
+#include "AngelHeader.h"
 #include "board.h"
 #include "solitairelogic.h"
 
@@ -19,7 +19,6 @@ private:
     Game();
     Board* _board;
     SolitaireLogic _slogic;
-    MoveInfo moveInfo;
 };
 
 #endif // GAME_H

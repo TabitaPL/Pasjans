@@ -6,27 +6,27 @@
 
 struct CardPosition
 {
-    CardPosition(int row_, int position_)
+    CardPosition(int row_, int offset_)
         : row(row_)
-        , position(position_) {}
-    int row, position;
+        , offset(offset_) {}
+    int row, offset;
 };
 
 struct Creation
 {
-    Creation(int row_, int position_, Card card_)
-        : cardPosition(row_, position_)
+    Creation(int row_, int offset_, Card card_)
+        : position(row_, offset_)
         , card(card_) {}
-    CardPosition cardPosition;
+    CardPosition position;
     Card card;
 };
 
 struct Swap
 {
-    Swap(int fromRow, int fromPosition,
-         int toRow, int toPosition)
-        : from(fromRow, fromPosition)
-        , to(toRow, toPosition) {}
+    Swap(int fromRow, int fromOffset,
+         int toRow, int toOffset)
+        : from(fromRow, fromOffset)
+        , to(toRow, toOffset) {}
     CardPosition from, to;
 };
 

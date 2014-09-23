@@ -10,14 +10,17 @@ SOURCES += \
     game.cpp \
     solitairelogic.cpp \
     moveinfo.cpp \
-    card.cpp
+    card.cpp \
+    cardcontroller.cpp
 
 HEADERS += \
     board.h \
     game.h \
     solitairelogic.h \
     moveinfo.h \
-    card.h
+    card.h \
+    cardcontroller.h \
+    AngelHeader.h
 
 resources.files = Resources/*
 resources.path  = $$OUT_PWD/Resources/

@@ -1,9 +1,11 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#include <Angel.h>
+#include "AngelHeader.h"
+#include "moveinfo.h"
 
 class Card;
+class CardController;
 /*
  * This class is responsible for:
  * 1) drawing background
@@ -17,13 +19,14 @@ public:
     Board();
     ~Board();
     void drawCards();
-    void setCards(std::vector<Card>* cards);
+    void parseMoveInfo(const MoveInfo& moveInfo);
 
     virtual void MouseDownEvent(Vec2i screenCoordinates, MouseButtonInput button);
 private:
     void registerCardFilenames();
+
     String _nameOfClickedCard;
-    std::vector<Renderable*> _objects; //all of objects on board
+    std::vector<std::vector<CardController*>> _cards;
     std::map<Card, std::string> _cardsRegistry;
 };
 

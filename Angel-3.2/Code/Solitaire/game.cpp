@@ -17,10 +17,10 @@ Game::~Game()
 /*static*/ void Game::start()
 {
     sysLog.Log("Start of the game");
+    MoveInfo moveInfo;
     _board = new Board();
     _slogic.setNewBoard(moveInfo);
-    std::vector<Card> * cards = _slogic.getCards();
-    _board->setCards(cards);
+    _board->parseMoveInfo(moveInfo);
 
     // this function won't return until StopGame
     theWorld.StartGame();
