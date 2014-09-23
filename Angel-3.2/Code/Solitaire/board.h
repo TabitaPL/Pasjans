@@ -18,7 +18,6 @@ class Board : public MouseListener
 public:
     Board();
     ~Board();
-    void drawCards();
     void parseMoveInfo(const MoveInfo& moveInfo);
 
     virtual void MouseDownEvent(Vec2i screenCoordinates, MouseButtonInput button);

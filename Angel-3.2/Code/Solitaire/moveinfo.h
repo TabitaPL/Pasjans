@@ -8,14 +8,14 @@ struct CardPosition
 {
     CardPosition(int row_, int offset_)
         : row(row_)
-        , offset(offset_) {}
-    int row, offset;
+        , column(offset_) {}
+    int row, column;
 };
 
 struct Creation
 {
-    Creation(int row_, int offset_, Card card_)
-        : position(row_, offset_)
+    Creation(int row_, int column_, Card card_)
+        : position(row_, column_)
         , card(card_) {}
     CardPosition position;
     Card card;

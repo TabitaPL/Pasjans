@@ -1,9 +1,9 @@
 #include "cardcontroller.h"
 
-void CardController::setLogicalPosition(int row, int position)
+void CardController::setLogicalPosition(int row, int column)
 {
     _row = row;
-    _position = position;
+    _column = column;
 }
 
 void CardController::setCard(Card card)

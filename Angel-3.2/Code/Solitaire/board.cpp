@@ -30,16 +30,16 @@ void Board::parseMoveInfo(const MoveInfo& moveInfo)
 {
     for (auto& c : moveInfo.getCreations())
     {
-        if (_cards[c.position.row][c.position.offset] != nullptr)
+        if (_cards[c.position.row][c.position.column] != nullptr)
             sysLog.Log("Creating card on top of a previous one.");
         else
-            _cards[c.position.row][c.position.offset] =
+            _cards[c.position.row][c.position.column] =
                     new CardController();
 
-        CardController* cc = _cards[c.position.row][c.position.offset];
+        CardController* cc = _cards[c.position.row][c.position.column];
         cc->setCard(c.card);
         std::stringstream ss;
-        ss << c.card.toString() << " (" << c.position.row << "," << c.position.offset << ")";
+        ss << c.card.toString() << " (" << c.position.row << "," << c.position.column << ")";
         sysLog.Log(ss.str());
 
         cc->SetName("Card");
@@ -58,7 +58,7 @@ void Board::parseMoveInfo(const MoveInfo& moveInfo)
 
         cc->SetDrawShape(ADS_Square);
         // TODO: get rid of magic numbers
-        cc->SetPosition(cardWidth + bottomLeft.X + c.position.offset * cardWidth + c.position.offset * 2.6f/14.0f,
+        cc->SetPosition(cardWidth + bottomLeft.X + c.position.column * cardWidth + c.position.column * 2.6f/14.0f,
                         topLeft.Y - cardHeight - c.position.row * cardHeight - c.position.row * 1.0f);
         theWorld.Add(cc);
     }
@@ -82,7 +82,7 @@ void Board::MouseDownEvent(Vec2i screenCoordinates, MouseButtonInput button)
             else
             {
                 Actor *previous = Actor::GetNamed(_nameOfClickedCard);
-                //swap graphic of previous and a
+                //swap graphic of previous and current
                 if (previous != nullptr)
                 {
                     previous->MoveTo(card->GetPosition(), 1.0);
