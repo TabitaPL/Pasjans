@@ -1,18 +1,23 @@
 #include "board.h"
 #include "game.h"
+#include "window.h"
 #include "solitairelogic.h"
-#include "cardcontroller.h"
+#include "cardactor.h"
 
 Board::Board()
     : _nameOfClickedCard("")
-    , _cards(int(Card::Type::COUNT), std::vector<CardController*>(int(Card::Value::COUNT)))
+    , _cards(int(Card::Type::COUNT), std::vector<CardActor*>(int(Card::Value::COUNT)))
 {
     for (int i = 0; i < _cards.size(); i++)
         for (int j = 0; j < _cards[i].size(); j++)
             _cards[i][j] = nullptr;
 
     registerCardFilenames();
-    theWorld.Initialize(1920, 1080, "Solitaire", false, false, false);
+    theWindow.setHorizontalMargin(1.0);
+    theWindow.setResolution(std::pair<int, int>(1920, 1080));
+    theWorld.Initialize(theWindow.getResolution().first, theWindow.getResolution().second,
+                        "Solitaire", false, false, false);
+    theWindow.setResolution(std::pair<int, int>(1920, 1080)); //again, because it has to be set after World Initialization
     theWorld.SetBackgroundColor(Color(0.0f, 0.60f, 0.16f));
 }
 
@@ -28,16 +33,25 @@ Board::~Board()
 
 void Board::parseMoveInfo(const MoveInfo& moveInfo)
 {
+    //compute size of cards
+    float spaceBetweenCards = 0.05; //in pixels
+    float cardWidth = theWindow.getWorldScreenWidth() /
+            (static_cast<float>(Card::Value::COUNT) +
+             theWindow.getHorizontalMargin() * 2 +
+             spaceBetweenCards * (static_cast<float>(Card::Value::COUNT) - 1));
+    float cardPositionX, cardPositionY;
     for (auto& c : moveInfo.getCreations())
     {
         if (_cards[c.position.row][c.position.column] != nullptr)
             sysLog.Log("Creating card on top of a previous one.");
         else
             _cards[c.position.row][c.position.column] =
-                    new CardController();
+                    new CardActor();
 
-        CardController* cc = _cards[c.position.row][c.position.column];
+
+        CardActor* cc = _cards[c.position.row][c.position.column];
         cc->setCard(c.card);
+        cc->setWidth(cardWidth);
         std::stringstream ss;
         ss << c.card.toString() << " (" << c.position.row << "," << c.position.column << ")";
         sysLog.Log(ss.str());
@@ -49,24 +63,16 @@ void Board::parseMoveInfo(const MoveInfo& moveInfo)
         else
             cc->SetSprite(std::string("Resources/Images/DeckPony/Back.png"));
 
-        // I don't like it. TODO:
-        // we should calculate those in window resize handler and keep stored.
-        Vector2 topRight = theCamera.GetWorldMaxVertex();
-        Vector2 bottomLeft = theCamera.GetWorldMinVertex();
-        Vector2 topLeft (bottomLeft.X, topRight.Y);
-
-        float margin = 1.0;
-        float spaceBetweenCards = 0.1; //in percent of screenWidth
-        sysLog.Log("Top left " + std::to_string(MathUtil::Abs(topLeft.X)) + " " + std::to_string(topRight.X) + " " + std::to_string(MathUtil::Abs(topLeft.X) + topRight.X) );
-        float screenWidth = topRight.X + MathUtil::Abs(topLeft.X);
-        float cardWidth = screenWidth / (static_cast<float>(Card::Value::COUNT) + margin * 2 + screenWidth * spaceBetweenCards);
-        float cardHeight = cardWidth / 0.65f; //this value is just to maintain proportion.
-        cc->SetSize(cardWidth, cardHeight);
-
+        cc->SetSize(cardWidth, cc->getHeight());
+        //sysLog.Log("Size of card: " + std::to_string(cardWidth) + " " + std::to_string(cc->getHeight()));
         cc->SetDrawShape(ADS_Square);
-        // TODO: get rid of magic numbers
-        cc->SetPosition(cardWidth + bottomLeft.X + c.position.column * cardWidth + c.position.column * screenWidth * spaceBetweenCards/(static_cast<float>(Card::Type::COUNT) + margin*2),
-                        topLeft.Y - cardHeight - c.position.row * cardHeight - c.position.row * 1.0f);
+        cardPositionX = cardWidth + theWindow.minX() + c.position.column * cardWidth +
+                c.position.column * theWindow.getWorldScreenWidth() * spaceBetweenCards/
+                (static_cast<float>(Card::Type::COUNT) + theWindow.getHorizontalMargin() * 2.0);
+        cardPositionY = theWindow.maxY() - cc->getHeight() - c.position.row * cc->getHeight() - c.position.row;
+
+        cc->SetPosition(cardPositionX, cardPositionY);
+        //sysLog.Log("Position of card: " + std::to_string(cardPositionX) + " " + std::to_string(cardPositionY));
         theWorld.Add(cc);
     }
 }

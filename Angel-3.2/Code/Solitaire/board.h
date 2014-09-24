@@ -5,7 +5,7 @@
 #include "moveinfo.h"
 
 class Card;
-class CardController;
+class CardActor;
 /*
  * This class is responsible for:
  * 1) drawing background
@@ -25,7 +25,7 @@ private:
     void registerCardFilenames();
 
     String _nameOfClickedCard;
-    std::vector<std::vector<CardController*>> _cards;
+    std::vector<std::vector<CardActor*>> _cards;
     std::map<Card, std::string> _cardsRegistry;
 };
 
