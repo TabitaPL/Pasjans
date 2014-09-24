@@ -54,14 +54,18 @@ void Board::parseMoveInfo(const MoveInfo& moveInfo)
         Vector2 topRight = theCamera.GetWorldMaxVertex();
         Vector2 bottomLeft = theCamera.GetWorldMinVertex();
         Vector2 topLeft (bottomLeft.X, topRight.Y);
+
+        float margin = 1.0;
+        float spaceBetweenCards = 0.1; //in percent of screenWidth
+        sysLog.Log("Top left " + std::to_string(MathUtil::Abs(topLeft.X)) + " " + std::to_string(topRight.X) + " " + std::to_string(MathUtil::Abs(topLeft.X) + topRight.X) );
         float screenWidth = topRight.X + MathUtil::Abs(topLeft.X);
-        float cardWidth = screenWidth / (14.0f + screenWidth * 0.1);
-        float cardHeight = cardWidth / 0.65f;
+        float cardWidth = screenWidth / (static_cast<float>(Card::Value::COUNT) + margin * 2 + screenWidth * spaceBetweenCards);
+        float cardHeight = cardWidth / 0.65f; //this value is just to maintain proportion.
         cc->SetSize(cardWidth, cardHeight);
 
         cc->SetDrawShape(ADS_Square);
         // TODO: get rid of magic numbers
-        cc->SetPosition(cardWidth + bottomLeft.X + c.position.column * cardWidth + c.position.column * 2.6f/14.0f,
+        cc->SetPosition(cardWidth + bottomLeft.X + c.position.column * cardWidth + c.position.column * screenWidth * spaceBetweenCards/(static_cast<float>(Card::Type::COUNT) + margin*2),
                         topLeft.Y - cardHeight - c.position.row * cardHeight - c.position.row * 1.0f);
         theWorld.Add(cc);
     }

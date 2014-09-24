@@ -20,10 +20,11 @@ void SolitaireLogic::setNewBoard(MoveInfo &moveInfo)
     std::mt19937 g(rd());
     std::shuffle(m_deck.begin(), m_deck.end(), g);
 
-    for (int i = 0; i < int(Card::Type::COUNT); i++)
-        for (int j = 0; j < int(Card::Value::COUNT); j++)
+    int numberOfColumns = static_cast<int>(Card::Value::COUNT);
+    for (int i = 0; i < static_cast<int>(Card::Type::COUNT); i++)
+        for (int j = 0; j < numberOfColumns; j++)
         {
-            int offset = i * int(Card::Value::COUNT) + j;
+            int offset = i * numberOfColumns + j;
             m_cards[i].push_back(m_deck[offset]);
             moveInfo.addCreation(Creation(i, j, m_deck[offset]));
         }

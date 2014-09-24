@@ -27,7 +27,6 @@ struct Card
         QUEEN,
         KING,
         ACE,
-        EMPTY,
         COUNT
     };
 
