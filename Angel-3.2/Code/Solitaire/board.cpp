@@ -6,7 +6,7 @@
 
 Board::Board()
     : _nameOfClickedCard("")
-    , _cards(int(Card::Type::COUNT), std::vector<CardActor*>(int(Card::Value::COUNT)))
+    , _cards(int(Card::Type::COUNT), std::vector<CardActor*>(int(Card::Value::COUNT) + 1))
 {
     for (int i = 0; i < _cards.size(); i++)
         for (int j = 0; j < _cards[i].size(); j++)
@@ -40,40 +40,47 @@ void Board::parseMoveInfo(const MoveInfo& moveInfo)
              theWindow.getHorizontalMargin() * 2 +
              spaceBetweenCards * (static_cast<float>(Card::Value::COUNT) - 1));
     float cardPositionX, cardPositionY;
-    for (auto& c : moveInfo.getCreations())
+    for (auto& creation : moveInfo.getCreations())
     {
-        if (_cards[c.position.row][c.position.column] != nullptr)
+        if (_cards[creation.position.row][creation.position.column] != nullptr)
             sysLog.Log("Creating card on top of a previous one.");
         else
-            _cards[c.position.row][c.position.column] =
+            _cards[creation.position.row][creation.position.column] =
                     new CardActor();
 
 
-        CardActor* cc = _cards[c.position.row][c.position.column];
-        cc->setCard(c.card);
-        cc->setWidth(cardWidth);
-        std::stringstream ss;
-        ss << c.card.toString() << " (" << c.position.row << "," << c.position.column << ")";
-        sysLog.Log(ss.str());
+        if (creation.card != nullptr)
+        {
+            CardActor* cardActor = _cards[creation.position.row][creation.position.column];
+            cardActor->setCard(creation.card);
+            cardActor->setWidth(cardWidth);
+//        std::stringstream ss;
+//        ss << c.card.toString() << " (" << c.position.row << "," << c.position.column << ")";
+//        sysLog.Log(ss.str());
 
-        cc->SetName("Card");
-        cc->Tag("card");
-        if (_cardsRegistry.count(c.card) > 0)
-            cc->SetSprite(_cardsRegistry[c.card]);
+            cardActor->SetName("Card");
+            cardActor->Tag("card");
+            if (_cardsRegistry.count(*creation.card) > 0)
+                cardActor->SetSprite(_cardsRegistry[*creation.card]); // should we register pointers...? probably not
+            else
+                cardActor->SetSprite(std::string("Resources/Images/DeckPony/Back.png"));
+
+            cardActor->SetSize(cardWidth, cardActor->getHeight());
+            //sysLog.Log("Size of card: " + std::to_string(cardWidth) + " " + std::to_string(cc->getHeight()));
+            cardActor->SetDrawShape(ADS_Square);
+            cardPositionX = cardWidth + theWindow.minX() + creation.position.column * cardWidth +
+                    creation.position.column * theWindow.getWorldScreenWidth() * spaceBetweenCards/
+                    (static_cast<float>(Card::Type::COUNT) + theWindow.getHorizontalMargin() * 2.0);
+            cardPositionY = theWindow.maxY() - cardActor->getHeight() - creation.position.row * cardActor->getHeight() - creation.position.row;
+
+            cardActor->SetPosition(cardPositionX, cardPositionY);
+            //sysLog.Log("Position of card: " + std::to_string(cardPositionX) + " " + std::to_string(cardPositionY));
+            theWorld.Add(cardActor);
+        }
         else
-            cc->SetSprite(std::string("Resources/Images/DeckPony/Back.png"));
-
-        cc->SetSize(cardWidth, cc->getHeight());
-        //sysLog.Log("Size of card: " + std::to_string(cardWidth) + " " + std::to_string(cc->getHeight()));
-        cc->SetDrawShape(ADS_Square);
-        cardPositionX = cardWidth + theWindow.minX() + c.position.column * cardWidth +
-                c.position.column * theWindow.getWorldScreenWidth() * spaceBetweenCards/
-                (static_cast<float>(Card::Type::COUNT) + theWindow.getHorizontalMargin() * 2.0);
-        cardPositionY = theWindow.maxY() - cc->getHeight() - c.position.row * cc->getHeight() - c.position.row;
-
-        cc->SetPosition(cardPositionX, cardPositionY);
-        //sysLog.Log("Position of card: " + std::to_string(cardPositionX) + " " + std::to_string(cardPositionY));
-        theWorld.Add(cc);
+        {
+            // handle creating and setting the empty space
+        }
     }
 }
 

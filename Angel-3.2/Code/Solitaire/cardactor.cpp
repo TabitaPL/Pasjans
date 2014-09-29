@@ -7,10 +7,10 @@ void CardActor::setLogicalPosition(int row, int column)
     _column = column;
 }
 
-void CardActor::setCard(Card card)
+void CardActor::setCard(Card const * const card)
 {
-    _cardType = card.type;
-    _cardValue = card.value;
+    _cardType = card->type;
+    _cardValue = card->value;
 }
 
 float CardActor::getWidth() const

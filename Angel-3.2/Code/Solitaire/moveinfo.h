@@ -14,11 +14,11 @@ struct CardPosition
 
 struct Creation
 {
-    Creation(int row_, int column_, Card card_)
+    Creation(int row_, int column_, Card *card_)
         : position(row_, column_)
         , card(card_) {}
     CardPosition position;
-    Card card;
+    Card *card;
 };
 
 struct Swap
