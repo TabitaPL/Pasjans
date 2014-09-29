@@ -33,8 +33,8 @@ Board::~Board()
 
 void Board::parseMoveInfo(const MoveInfo& moveInfo)
 {
-    //compute size of cards
-    float spaceBetweenCards = 0.05; //in pixels
+    // compute size of cards
+    float spaceBetweenCards = 0.01;
     float cardWidth = theWindow.getWorldScreenWidth() /
             (static_cast<float>(Card::Value::COUNT) +
              theWindow.getHorizontalMargin() * 2 +
@@ -119,59 +119,61 @@ void Board::MouseDownEvent(Vec2i screenCoordinates, MouseButtonInput button)
 
 void Board::registerCardFilenames()
 {
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::TWO), std::string("Resources/Images/DeckPony/CLUB/2.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::THREE), std::string("Resources/Images/DeckPony/CLUB/3.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::FOUR), std::string("Resources/Images/DeckPony/CLUB/4.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::FIVE), std::string("Resources/Images/DeckPony/CLUB/5.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::SIX), std::string("Resources/Images/DeckPony/CLUB/6.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::SEVEN), std::string("Resources/Images/DeckPony/CLUB/7.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::EIGHT), std::string("Resources/Images/DeckPony/CLUB/8.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::NINE), std::string("Resources/Images/DeckPony/CLUB/9.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::TEN), std::string("Resources/Images/DeckPony/CLUB/10.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::JACK), std::string("Resources/Images/DeckPony/CLUB/J.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::QUEEN), std::string("Resources/Images/DeckPony/CLUB/Q.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::KING), std::string("Resources/Images/DeckPony/CLUB/K.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::ACE), std::string("Resources/Images/DeckPony/CLUB/A.png")));
+    std::string path = "Resources/Images/PNG-cards-1.3/";
 
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::TWO), std::string("Resources/Images/DeckPony/DIAMOND/2.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::THREE), std::string("Resources/Images/DeckPony/DIAMOND/3.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::FOUR), std::string("Resources/Images/DeckPony/DIAMOND/4.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::FIVE), std::string("Resources/Images/DeckPony/DIAMOND/5.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::SIX), std::string("Resources/Images/DeckPony/DIAMOND/6.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::SEVEN), std::string("Resources/Images/DeckPony/DIAMOND/7.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::EIGHT), std::string("Resources/Images/DeckPony/DIAMOND/8.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::NINE), std::string("Resources/Images/DeckPony/DIAMOND/9.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::TEN), std::string("Resources/Images/DeckPony/DIAMOND/10.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::JACK), std::string("Resources/Images/DeckPony/DIAMOND/J.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::QUEEN), std::string("Resources/Images/DeckPony/DIAMOND/Q.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::KING), std::string("Resources/Images/DeckPony/DIAMOND/K.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::ACE), std::string("Resources/Images/DeckPony/DIAMOND/A.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::TWO), std::string(path + "CLUB/2.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::THREE), std::string(path + "CLUB/3.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::FOUR), std::string(path + "CLUB/4.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::FIVE), std::string(path + "CLUB/5.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::SIX), std::string(path + "CLUB/6.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::SEVEN), std::string(path + "CLUB/7.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::EIGHT), std::string(path + "CLUB/8.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::NINE), std::string(path + "CLUB/9.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::TEN), std::string(path + "CLUB/10.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::JACK), std::string(path + "CLUB/J.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::QUEEN), std::string(path + "CLUB/Q.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::KING), std::string(path + "CLUB/K.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::CLUB, Card::Value::ACE), std::string(path + "CLUB/A.png")));
 
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::TWO), std::string("Resources/Images/DeckPony/HEART/2.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::THREE), std::string("Resources/Images/DeckPony/HEART/3.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::FOUR), std::string("Resources/Images/DeckPony/HEART/4.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::FIVE), std::string("Resources/Images/DeckPony/HEART/5.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::SIX), std::string("Resources/Images/DeckPony/HEART/6.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::SEVEN), std::string("Resources/Images/DeckPony/HEART/7.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::EIGHT), std::string("Resources/Images/DeckPony/HEART/8.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::NINE), std::string("Resources/Images/DeckPony/HEART/9.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::TEN), std::string("Resources/Images/DeckPony/HEART/10.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::JACK), std::string("Resources/Images/DeckPony/HEART/J.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::QUEEN), std::string("Resources/Images/DeckPony/HEART/Q.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::KING), std::string("Resources/Images/DeckPony/HEART/K.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::ACE), std::string("Resources/Images/DeckPony/HEART/A.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::TWO), std::string(path + "DIAMOND/2.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::THREE), std::string(path + "DIAMOND/3.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::FOUR), std::string(path + "DIAMOND/4.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::FIVE), std::string(path + "DIAMOND/5.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::SIX), std::string(path + "DIAMOND/6.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::SEVEN), std::string(path + "DIAMOND/7.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::EIGHT), std::string(path + "DIAMOND/8.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::NINE), std::string(path + "DIAMOND/9.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::TEN), std::string(path + "DIAMOND/10.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::JACK), std::string(path + "DIAMOND/J.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::QUEEN), std::string(path + "DIAMOND/Q.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::KING), std::string(path + "DIAMOND/K.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::DIAMOND, Card::Value::ACE), std::string(path + "DIAMOND/A.png")));
 
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::TWO), std::string("Resources/Images/DeckPony/SPADE/2.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::THREE), std::string("Resources/Images/DeckPony/SPADE/3.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::FOUR), std::string("Resources/Images/DeckPony/SPADE/4.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::FIVE), std::string("Resources/Images/DeckPony/SPADE/5.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::SIX), std::string("Resources/Images/DeckPony/SPADE/6.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::SEVEN), std::string("Resources/Images/DeckPony/SPADE/7.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::EIGHT), std::string("Resources/Images/DeckPony/SPADE/8.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::NINE), std::string("Resources/Images/DeckPony/SPADE/9.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::TEN), std::string("Resources/Images/DeckPony/SPADE/10.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::JACK), std::string("Resources/Images/DeckPony/SPADE/J.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::QUEEN), std::string("Resources/Images/DeckPony/SPADE/Q.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::KING), std::string("Resources/Images/DeckPony/SPADE/K.png")));
-    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::ACE), std::string("Resources/Images/DeckPony/SPADE/A.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::TWO), std::string(path + "HEART/2.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::THREE), std::string(path + "HEART/3.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::FOUR), std::string(path + "HEART/4.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::FIVE), std::string(path + "HEART/5.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::SIX), std::string(path + "HEART/6.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::SEVEN), std::string(path + "HEART/7.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::EIGHT), std::string(path + "HEART/8.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::NINE), std::string(path + "HEART/9.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::TEN), std::string(path + "HEART/10.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::JACK), std::string(path + "HEART/J.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::QUEEN), std::string(path + "HEART/Q.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::KING), std::string(path + "HEART/K.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::HEART, Card::Value::ACE), std::string(path + "HEART/A.png")));
+
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::TWO), std::string(path + "SPADE/2.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::THREE), std::string(path + "SPADE/3.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::FOUR), std::string(path + "SPADE/4.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::FIVE), std::string(path + "SPADE/5.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::SIX), std::string(path + "SPADE/6.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::SEVEN), std::string(path + "SPADE/7.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::EIGHT), std::string(path + "SPADE/8.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::NINE), std::string(path + "SPADE/9.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::TEN), std::string(path + "SPADE/10.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::JACK), std::string(path + "SPADE/J.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::QUEEN), std::string(path + "SPADE/Q.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::KING), std::string(path + "SPADE/K.png")));
+    _cardsRegistry.insert(std::pair<Card, std::string>(Card(Card::Type::SPADE, Card::Value::ACE), std::string(path + "SPADE/A.png")));
 }
