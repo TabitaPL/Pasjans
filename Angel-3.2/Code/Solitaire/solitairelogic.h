@@ -9,7 +9,6 @@ class SolitaireLogic
 public:
     SolitaireLogic();
     void setNewBoard(MoveInfo &moveInfo);
-    std::vector<Card *> *getCards();  // TODO: remove
 
 private:
     std::vector<Card*> m_cards[4];   // representation of cards on the board

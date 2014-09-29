@@ -34,8 +34,3 @@ void SolitaireLogic::setNewBoard(MoveInfo &moveInfo)
         }
     }
 }
-
-std::vector<Card*> *SolitaireLogic::getCards()
-{
-    return m_cards;
-}
