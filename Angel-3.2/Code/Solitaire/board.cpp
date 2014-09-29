@@ -14,10 +14,10 @@ Board::Board()
 
     registerCardFilenames();
     theWindow.setHorizontalMargin(1.0);
-    theWindow.setResolution(std::pair<int, int>(1920, 1080));
-    theWorld.Initialize(theWindow.getResolution().first, theWindow.getResolution().second,
+    std::pair<int, int> resolution(640, 480);
+    theWorld.Initialize(resolution.first, resolution.second,
                         "Solitaire", false, false, false);
-    theWindow.setResolution(std::pair<int, int>(1920, 1080)); //again, because it has to be set after World Initialization
+    theWindow.setResolution(resolution);
     theWorld.SetBackgroundColor(Color(0.0f, 0.60f, 0.16f));
 }
 
