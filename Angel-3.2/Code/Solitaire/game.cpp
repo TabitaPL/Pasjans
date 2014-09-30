@@ -1,6 +1,8 @@
 #include "game.h"
+#include "window.h"
 
 Game::Game()
+    : _board(nullptr)
 {
 }
 
@@ -17,6 +19,13 @@ Game::~Game()
 /*static*/ void Game::start()
 {
     sysLog.Log("Start of the game");
+    theWindow.setHorizontalMargin(1.0);
+    std::pair<int, int> resolution(640, 480);
+    theWorld.Initialize(resolution.first, resolution.second,
+                        "Solitaire", false, false, false);
+    theWindow.setResolution(resolution);
+    theWorld.SetBackgroundColor(Color(0.0f, 0.60f, 0.16f));
+
     MoveInfo moveInfo;
     _board = new Board();
     _slogic.setNewBoard(moveInfo);
@@ -28,7 +37,7 @@ Game::~Game()
 
 /*static*/ void Game::stop()
 {
-    sysLog.Log("End of the game");
+    sysLog.Log("Stopping the game");
     // do all your setup first, because this function won't return until you're exiting
     theWorld.StopGame();
 }

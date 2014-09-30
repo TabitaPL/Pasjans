@@ -13,12 +13,6 @@ Board::Board()
             _cards[i][j] = nullptr;
 
     registerCardFilenames();
-    theWindow.setHorizontalMargin(1.0);
-    std::pair<int, int> resolution(640, 480);
-    theWorld.Initialize(resolution.first, resolution.second,
-                        "Solitaire", false, false, false);
-    theWindow.setResolution(resolution);
-    theWorld.SetBackgroundColor(Color(0.0f, 0.60f, 0.16f));
 }
 
 Board::~Board()
