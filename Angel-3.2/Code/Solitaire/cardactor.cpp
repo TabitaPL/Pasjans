@@ -13,20 +13,9 @@ void CardActor::setCard(Card const * const card)
     _cardValue = card->value;
 }
 
-float CardActor::getWidth() const
-{
-    return _width;
-}
-
-float CardActor::getHeight() const
-{
-    return _height;
-}
-
 void CardActor::setWidth(float w)
 {
-    _width = w;
-    _height = _width / 0.65f;
+   SetSize(Vector2(w, w / 0.65f));
 }
 
 

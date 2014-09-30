@@ -34,7 +34,7 @@ Board::~Board()
 void Board::parseMoveInfo(const MoveInfo& moveInfo)
 {
     // compute size of cards
-    float spaceBetweenCards = 0.01;
+    float spaceBetweenCards = 0.01; //in pixels
     float cardWidth = theWindow.getWorldScreenWidth() /
             (static_cast<float>(Card::Value::COUNT) +
              theWindow.getHorizontalMargin() * 2 +
