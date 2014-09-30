@@ -59,13 +59,13 @@ void Board::parseMoveInfo(const MoveInfo& moveInfo)
             else
                 cardActor->SetSprite(std::string("Resources/Images/DeckPony/Back.png"));
 
-            cardActor->SetSize(cardWidth, cardActor->getHeight());
+            cardActor->SetSize(cardWidth, cardActor->GetSize().Y);
             //sysLog.Log("Size of card: " + std::to_string(cardWidth) + " " + std::to_string(cc->getHeight()));
             cardActor->SetDrawShape(ADS_Square);
             cardPositionX = cardWidth + theWindow.minX() + creation.position.column * cardWidth +
                     creation.position.column * theWindow.getWorldScreenWidth() * spaceBetweenCards/
                     (static_cast<float>(Card::Type::COUNT) + theWindow.getHorizontalMargin() * 2.0);
-            cardPositionY = theWindow.maxY() - cardActor->getHeight() - creation.position.row * cardActor->getHeight() - creation.position.row;
+            cardPositionY = theWindow.maxY() - cardActor->GetSize().Y - creation.position.row * cardActor->GetSize().Y - creation.position.row;
 
             cardActor->SetPosition(cardPositionX, cardPositionY);
             //sysLog.Log("Position of card: " + std::to_string(cardPositionX) + " " + std::to_string(cardPositionY));
