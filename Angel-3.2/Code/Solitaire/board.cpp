@@ -48,9 +48,10 @@ void Board::parseMoveInfo(const MoveInfo& moveInfo)
             CardActor* cardActor = _cards[creation.position.row][creation.position.column];
             cardActor->setCard(creation.card);
             cardActor->setWidth(cardWidth);
-//        std::stringstream ss;
-//        ss << c.card.toString() << " (" << c.position.row << "," << c.position.column << ")";
-//        sysLog.Log(ss.str());
+
+//            std::stringstream ss;
+//            ss << creation.card->toString() << " (" << creation.position.row << "," << creation.position.column << ")";
+//            sysLog.Log(ss.str());
 
             cardActor->SetName("Card");
             cardActor->Tag("card");
