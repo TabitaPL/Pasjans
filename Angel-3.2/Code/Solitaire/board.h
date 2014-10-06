@@ -30,7 +30,7 @@ private:
     std::vector<std::vector<CardActor*>> _cards;
     std::vector<std::vector<Actor*>> _frames;
     std::map<Card, std::string> _cardsRegistry;
-    float _spaceBetweenCard;
+    float _spaceBetweenCards;
 };
 
 #endif // BOARD_H

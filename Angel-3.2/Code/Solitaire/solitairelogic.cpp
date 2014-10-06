@@ -3,7 +3,9 @@
 #include <algorithm>
 #include <iterator>
 #include <iostream>
+#include <sstream>
 #include "solitairelogic.h"
+#include "AngelHeader.h"
 
 SolitaireLogic::SolitaireLogic()
 {
@@ -11,7 +13,7 @@ SolitaireLogic::SolitaireLogic()
     m_deck.clear();
     for (int i = 0; i < int(Card::Type::COUNT); i++)
         for (int j = 0; j < int(Card::Value::COUNT); j++)
-           m_deck.push_back(Card(Card::Type(i), Card::Value(j)));
+            m_deck.push_back(Card(Card::Type(i), Card::Value(j)));
 }
 
 void SolitaireLogic::setNewBoard(MoveInfo &moveInfo)
@@ -28,7 +30,7 @@ void SolitaireLogic::setNewBoard(MoveInfo &moveInfo)
         moveInfo.addCreation(Creation(i, 0, nullptr));
         for (int j = 1; j < numberOfColumns; j++)
         {
-            int offset = i * numberOfColumns + j;
+            int offset = i * numberOfColumns + j - (i + 1);
             m_cards[i].push_back(&m_deck[offset]);
             moveInfo.addCreation(Creation(i, j, &m_deck[offset]));
         }

@@ -6,7 +6,7 @@
 
 Board::Board()
     : _nameOfClickedCard("")
-    , _spaceBetweenCard(0.01)
+    , _spaceBetweenCards(0.01)
     , _cards(int(Card::Type::COUNT), std::vector<CardActor*>(int(Card::Value::COUNT) + 1))
     , _frames(int(Card::Type::COUNT), std::vector<Actor*>(int(Card::Value::COUNT) + 1))
 {
@@ -19,7 +19,7 @@ Board::Board()
 
     registerCardFilenames();
     theWindow.setHorizontalMargin(1.0);
-    std::pair<int, int> resolution(800, 600);
+    std::pair<int, int> resolution(640, 480);
     theWorld.Initialize(resolution.first, resolution.second,
                         "Solitaire", false, false, false);
     theWindow.setResolution(resolution);
@@ -60,9 +60,10 @@ void Board::createFrame(Creation creation, float cardWidth)
     frame->SetSize(cardWidth, frame->GetSize().Y);
     frame->SetColor(Color(1.0f, 1.0f, 0.0f));
     frame->SetDrawShape(ADS_Square);
+    frame->SetLayer(1);
 
     positionX = cardWidth + theWindow.minX() + creation.position.column * cardWidth +
-            creation.position.column * theWindow.getWorldScreenWidth() * _spaceBetweenCard/
+            creation.position.column * theWindow.getWorldScreenWidth() * _spaceBetweenCards/
             (static_cast<float>(Card::Type::COUNT) + theWindow.getHorizontalMargin() * 2.0);
     positionY = theWindow.maxY() - frame->GetSize().Y -
             creation.position.row * frame->GetSize().Y - creation.position.row;
@@ -90,16 +91,17 @@ void Board::createCard(Creation creation, float cardWidth)
 
         cardActor->SetName("Card");
         cardActor->Tag("card");
+        cardActor->SetLayer(2);
         if (_cardsRegistry.count(*creation.card) > 0)
             cardActor->SetSprite(_cardsRegistry[*creation.card]); // should we register pointers...? probably not
 
-        cardActor->SetSize(cardWidth, cardActor->GetSize().Y);
-        cardActor->SetDrawShape(ADS_Square);
-        positionX = cardWidth + theWindow.minX() + creation.position.column * cardWidth +
-                creation.position.column * theWindow.getWorldScreenWidth() * _spaceBetweenCard/
-                (static_cast<float>(Card::Type::COUNT) + theWindow.getHorizontalMargin() * 2.0);
-        positionY = theWindow.maxY() - cardActor->GetSize().Y -
-                creation.position.row * cardActor->GetSize().Y - creation.position.row;
+            cardActor->SetSize(cardWidth, cardActor->GetSize().Y);
+            //sysLog.Log("Size of card: " + std::to_string(cardWidth) + " " + std::to_string(cc->getHeight()));
+            cardActor->SetDrawShape(ADS_Square);
+            positionX = cardWidth + theWindow.minX() + creation.position.column * cardWidth +
+                    creation.position.column * theWindow.getWorldScreenWidth() * _spaceBetweenCards/
+                    (static_cast<float>(Card::Type::COUNT) + theWindow.getHorizontalMargin() * 2.0);
+            positionY = theWindow.maxY() - cardActor->GetSize().Y - creation.position.row * cardActor->GetSize().Y - creation.position.row;
 
         cardActor->SetPosition(positionX, positionY);
 
@@ -117,7 +119,7 @@ void Board::parseMoveInfo(const MoveInfo& moveInfo)
     float cardWidth = theWindow.getWorldScreenWidth() /
             (static_cast<float>(Card::Value::COUNT) +
              theWindow.getHorizontalMargin() * 2 +
-             _spaceBetweenCard * (static_cast<float>(Card::Value::COUNT) - 1));
+             _spaceBetweenCards * (static_cast<float>(Card::Value::COUNT) - 1));
 
     for (auto& creation : moveInfo.getCreations())
     {
