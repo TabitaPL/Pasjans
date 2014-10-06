@@ -50,7 +50,7 @@ void Window::setResolution(const std::pair<int, int> &resolution)
     _maxX = topRight.X;
     _minY = bottomLeft.Y;
     _maxY = topRight.Y;
-    sysLog.Log("Minimal values: " + std::to_string(_minX) + " " + std::to_string(_maxX) + " " + std::to_string(_minY) + " " + std::to_string(_maxY) );
+    sysLog.Log("Window values: " + std::to_string(_minX) + " " + std::to_string(_maxX) + " " + std::to_string(_minY) + " " + std::to_string(_maxY) );
 
 }
 

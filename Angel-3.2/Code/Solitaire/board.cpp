@@ -6,15 +6,20 @@
 
 Board::Board()
     : _nameOfClickedCard("")
+    , _spaceBetweenCard(0.01)
     , _cards(int(Card::Type::COUNT), std::vector<CardActor*>(int(Card::Value::COUNT) + 1))
+    , _frames(int(Card::Type::COUNT), std::vector<Actor*>(int(Card::Value::COUNT) + 1))
 {
     for (int i = 0; i < _cards.size(); i++)
         for (int j = 0; j < _cards[i].size(); j++)
+        {
             _cards[i][j] = nullptr;
+            _frames[i][j] = nullptr;
+        }
 
     registerCardFilenames();
     theWindow.setHorizontalMargin(1.0);
-    std::pair<int, int> resolution(640, 480);
+    std::pair<int, int> resolution(800, 600);
     theWorld.Initialize(resolution.first, resolution.second,
                         "Solitaire", false, false, false);
     theWindow.setResolution(resolution);
@@ -23,64 +28,101 @@ Board::Board()
 
 Board::~Board()
 {
-    for (int i = 0; i < _cards.size(); i++)
-        for (int j = 0; j < _cards[i].size(); j++)
+    //delete cards and frames
+    for (unsigned int i = 0; i < _cards.size(); i++)
+        for (unsigned int j = 0; j < _cards[i].size(); j++)
         {
             _cards[i][j]->Destroy();
             delete _cards[i][j];
         }
+    for (unsigned int i = 0; i < _frames.size(); i++)
+        for (unsigned int j = 0; j < _frames[i].size(); j++)
+        {
+            _frames[i][j]->Destroy();
+            delete _frames[i][j];
+        }
+}
+
+
+void Board::createFrame(Creation creation, float cardWidth)
+{
+    float positionX, positionY;
+    //create frame
+    if (_frames[creation.position.row][creation.position.column] != nullptr)
+        sysLog.Log("Creating frame on top of a previous one.");
+    else
+        _frames[creation.position.row][creation.position.column] =
+                new Actor();
+
+    Actor *frame = _frames[creation.position.row][creation.position.column];
+    frame->SetSize(Vector2(cardWidth, cardWidth/0.65f));
+    frame->Tag("frame");
+    frame->SetSize(cardWidth, frame->GetSize().Y);
+    frame->SetColor(Color(1.0f, 1.0f, 0.0f));
+    frame->SetDrawShape(ADS_Square);
+
+    positionX = cardWidth + theWindow.minX() + creation.position.column * cardWidth +
+            creation.position.column * theWindow.getWorldScreenWidth() * _spaceBetweenCard/
+            (static_cast<float>(Card::Type::COUNT) + theWindow.getHorizontalMargin() * 2.0);
+    positionY = theWindow.maxY() - frame->GetSize().Y -
+            creation.position.row * frame->GetSize().Y - creation.position.row;
+    frame->SetPosition(positionX, positionY);
+    theWorld.Add(frame);
+}
+
+void Board::createCard(Creation creation, float cardWidth)
+{
+    float positionX, positionY;
+    if (_cards[creation.position.row][creation.position.column] != nullptr)
+        sysLog.Log("Creating card on top of a previous one.");
+    else
+        _cards[creation.position.row][creation.position.column] =
+                new CardActor();
+
+    if (creation.card != nullptr)
+    {
+        CardActor* cardActor = _cards[creation.position.row][creation.position.column];
+        cardActor->setCard(creation.card);
+        cardActor->setWidth(cardWidth);
+//        std::stringstream ss;
+//        ss << c.card.toString() << " (" << c.position.row << "," << c.position.column << ")";
+//        sysLog.Log(ss.str());
+
+        cardActor->SetName("Card");
+        cardActor->Tag("card");
+        if (_cardsRegistry.count(*creation.card) > 0)
+            cardActor->SetSprite(_cardsRegistry[*creation.card]); // should we register pointers...? probably not
+
+        cardActor->SetSize(cardWidth, cardActor->GetSize().Y);
+        cardActor->SetDrawShape(ADS_Square);
+        positionX = cardWidth + theWindow.minX() + creation.position.column * cardWidth +
+                creation.position.column * theWindow.getWorldScreenWidth() * _spaceBetweenCard/
+                (static_cast<float>(Card::Type::COUNT) + theWindow.getHorizontalMargin() * 2.0);
+        positionY = theWindow.maxY() - cardActor->GetSize().Y -
+                creation.position.row * cardActor->GetSize().Y - creation.position.row;
+
+        cardActor->SetPosition(positionX, positionY);
+
+        theWorld.Add(cardActor);
+    }
+    else
+    {
+        // handle creating and setting the empty space
+    }
 }
 
 void Board::parseMoveInfo(const MoveInfo& moveInfo)
 {
     // compute size of cards
-    float spaceBetweenCards = 0.01; //in pixels
     float cardWidth = theWindow.getWorldScreenWidth() /
             (static_cast<float>(Card::Value::COUNT) +
              theWindow.getHorizontalMargin() * 2 +
-             spaceBetweenCards * (static_cast<float>(Card::Value::COUNT) - 1));
-    float cardPositionX, cardPositionY;
+             _spaceBetweenCard * (static_cast<float>(Card::Value::COUNT) - 1));
+
     for (auto& creation : moveInfo.getCreations())
     {
-        if (_cards[creation.position.row][creation.position.column] != nullptr)
-            sysLog.Log("Creating card on top of a previous one.");
-        else
-            _cards[creation.position.row][creation.position.column] =
-                    new CardActor();
-
-
-        if (creation.card != nullptr)
-        {
-            CardActor* cardActor = _cards[creation.position.row][creation.position.column];
-            cardActor->setCard(creation.card);
-            cardActor->setWidth(cardWidth);
-//        std::stringstream ss;
-//        ss << c.card.toString() << " (" << c.position.row << "," << c.position.column << ")";
-//        sysLog.Log(ss.str());
-
-            cardActor->SetName("Card");
-            cardActor->Tag("card");
-            if (_cardsRegistry.count(*creation.card) > 0)
-                cardActor->SetSprite(_cardsRegistry[*creation.card]); // should we register pointers...? probably not
-            else
-                cardActor->SetSprite(std::string("Resources/Images/DeckPony/Back.png"));
-
-            cardActor->SetSize(cardWidth, cardActor->getHeight());
-            //sysLog.Log("Size of card: " + std::to_string(cardWidth) + " " + std::to_string(cc->getHeight()));
-            cardActor->SetDrawShape(ADS_Square);
-            cardPositionX = cardWidth + theWindow.minX() + creation.position.column * cardWidth +
-                    creation.position.column * theWindow.getWorldScreenWidth() * spaceBetweenCards/
-                    (static_cast<float>(Card::Type::COUNT) + theWindow.getHorizontalMargin() * 2.0);
-            cardPositionY = theWindow.maxY() - cardActor->getHeight() - creation.position.row * cardActor->getHeight() - creation.position.row;
-
-            cardActor->SetPosition(cardPositionX, cardPositionY);
-            //sysLog.Log("Position of card: " + std::to_string(cardPositionX) + " " + std::to_string(cardPositionY));
-            theWorld.Add(cardActor);
-        }
-        else
-        {
-            // handle creating and setting the empty space
-        }
+        createFrame(creation, cardWidth);
+        createCard(creation, cardWidth);
     }
 }
 
