@@ -9,8 +9,19 @@
 *.obj
 *.tlog
 *.pdb
+*.opensdf
+*.sdf
+*.idb
+*.htm
+*.lastbuildstate
+*.pch
+*.ipch
+*.exe
+*.exp
+*.ilk
+*.unsuccessfulbuild
 
-# ignore all files in directories
+# ignore all files in following directories
 Angel-3.2/Code/Build/
 Angel-3.2/Code/ClientGame/
 Angel-3.2/Code/IntroGame/
@@ -19,6 +30,8 @@ Angel-3.2/Code/GameJam.sln
 Angel-3.2/.gitignore
 Angel-3.2/.hgignore
 Angel-3.2/Code/build-*/
+Angel-3.2/Code/Angel/Libraries/glfw-3.0.3/tests/
+Angel-3.2/Code/Angel/Libraries/glfw-3.0.3/examples/
 #other not needed
 *.suo
 *.ncb
