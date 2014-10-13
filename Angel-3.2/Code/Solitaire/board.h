@@ -23,14 +23,17 @@ public:
     virtual void MouseDownEvent(Vec2i screenCoordinates, MouseButtonInput button);
 private:
     void registerCardFilenames();
-    void createFrame(Creation creation, float cardWidth);
-    void createCard(Creation creation, float cardWidth);
+	void drawFrame();
+    void createCard(Creation creation);
 
     String _nameOfClickedCard;
     std::vector<std::vector<CardActor*>> _cards;
     std::vector<std::vector<Actor*>> _frames;
     std::map<Card, std::string> _cardsRegistry;
     float _spaceBetweenCards;
+	float _cardWidth;
+	const int _columnCount;
+	const int _rowCount;
 };
 
 #endif // BOARD_H
