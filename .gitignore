@@ -2,10 +2,14 @@
 *.a
 *.o
 *.lo
-*.dll
 *.lib
 *.log
 *.orig
+# Windows/VS stuff
+*.obj
+*.tlog
+*.pdb
+
 # ignore all files in directories
 Angel-3.2/Code/Build/
 Angel-3.2/Code/ClientGame/
