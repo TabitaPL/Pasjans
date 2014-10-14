@@ -20,11 +20,6 @@ Board::Board()
 
     registerCardFilenames();
     theWindow.setHorizontalMargin(1.0);
-    std::pair<int, int> resolution(640, 480);
-    theWorld.Initialize(resolution.first, resolution.second,
-                        "Solitaire", false, false, false);
-    theWindow.setResolution(resolution);
-    theWorld.SetBackgroundColor(Color(0.0f, 0.60f, 0.16f));
 
 	_cardWidth = theWindow.getWorldScreenWidth() / 
 		(static_cast<float>(Card::Value::COUNT) +
@@ -40,15 +35,22 @@ Board::~Board()
     for (unsigned int i = 0; i < _cards.size(); i++)
         for (unsigned int j = 0; j < _cards[i].size(); j++)
         {
-            _cards[i][j]->Destroy();
-            delete _cards[i][j];
+			if (_cards[i][j] != nullptr)
+			{
+				_cards[i][j]->Destroy();
+				delete _cards[i][j];
+			}
         }
+
     for (unsigned int i = 0; i < _frames.size(); i++)
-        for (unsigned int j = 0; j < _frames[i].size(); j++)
-        {
-            _frames[i][j]->Destroy();
-            delete _frames[i][j];
-        }
+		for (unsigned int j = 0; j < _frames[i].size(); j++)
+		{
+		if (_cards[i][j] != nullptr)
+			{
+				_frames[i][j]->Destroy();
+				delete _frames[i][j];
+			}
+		}
 }
 
 

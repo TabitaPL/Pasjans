@@ -20,7 +20,7 @@ Game::~Game()
 {
     sysLog.Log("Start of the game");
     theWindow.setHorizontalMargin(1.0);
-    std::pair<int, int> resolution(640, 480);
+    std::pair<int, int> resolution(1024, 768);
     theWorld.Initialize(resolution.first, resolution.second,
                         "Solitaire", false, false, false);
     theWindow.setResolution(resolution);
