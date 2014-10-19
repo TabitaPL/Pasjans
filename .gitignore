@@ -2,7 +2,6 @@
 *.a
 *.o
 *.lo
-*.lib
 *.log
 *.orig
 # Windows/VS stuff
