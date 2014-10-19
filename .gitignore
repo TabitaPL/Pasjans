@@ -23,6 +23,12 @@ Angel-3.2/Code/Build/
 Angel-3.2/Code/ClientGame/
 Angel-3.2/Code/IntroGame/
 Angel-3.2/Code/GameJam*/
+Angel-3.2/Code/Angel/Debug/
+Angel-3.2/Code/Angel/Release/
+Angel-3.2/Code/Solitaire/*.dll
+Angel-3.2/Code/Solitaire/Debug/
+Angel-3.2/Code/Solitaire/Release/
+Angel-3.2/Code/Solitaire/Published/
 Angel-3.2/.gitignore
 Angel-3.2/.hgignore
 Angel-3.2/Code/build-*/
@@ -42,6 +48,7 @@ Angel-3.2/Code/Angel/Libraries/glfw-3.0.3/examples/
 
 # specific files from Angel build to ignore.
 Angel-3.2/Code/Angel/Libraries/Box2D-2.2.1/Build/Box2D/
+Angel-3.2/Code/Angel/Libraries/Box2D-2.2.1/Build/vs2010/*/*.lib
 Angel-3.2/Code/Angel/Libraries/Box2D-2.2.1/Build/CMakeCache.txt
 Angel-3.2/Code/Angel/Libraries/Box2D-2.2.1/Build/CMakeFiles/
 Angel-3.2/Code/Angel/Libraries/Box2D-2.2.1/Build/HelloWorld/
@@ -50,6 +57,7 @@ Angel-3.2/Code/Angel/Libraries/Box2D-2.2.1/Build/Testbed/
 Angel-3.2/Code/Angel/Libraries/Box2D-2.2.1/Build/cmake_install.cmake
 Angel-3.2/Code/Angel/Libraries/Box2D-2.2.1/Build/freeglut/
 Angel-3.2/Code/Angel/Libraries/Box2D-2.2.1/Build/glui/
+Angel-3.2/Code/Angel/Libraries/freetype-2.4.8/objs/win32/vc2010/*.lib
 Angel-3.2/Code/Angel/Libraries/FTGL/unix/Make.conf
 Angel-3.2/Code/Angel/Libraries/FTGL/unix/config.status
 Angel-3.2/Code/Angel/Libraries/FTGL/unix/docs/doc-stamp
@@ -57,7 +65,14 @@ Angel-3.2/Code/Angel/Libraries/FTGL/unix/ftgl.pc
 Angel-3.2/Code/Angel/Libraries/FTGL/unix/libtool
 Angel-3.2/Code/Angel/Libraries/FTGL/unix/src/.libs/
 Angel-3.2/Code/Angel/Libraries/FTGL/unix/src/libftgl.la
+Angel-3.2/Code/Angel/Libraries/FTGL/win32_vcpp/Build/
+Angel-3.2/Code/Angel/Libraries/gwen/lib/
+Angel-3.2/Code/Angel/Libraries/libpng-1.4.1/projects/visualc71/Win32*/
+Angel-3.2/Code/Angel/Libraries/libogg-1.3.0/win32/
+Angel-3.2/Code/Angel/Libraries/libvorbis-1.3.2/win32/VS2010/libvorbis/Win32/
+Angel-3.2/Code/Angel/Libraries/libvorbis-1.3.2/win32/VS2010/libvorbisfile/Win32/
 Angel-3.2/Code/Angel/Libraries/angel-lua-build/lua
+Angel-3.2/Code/Angel/Libraries/lua-5.2.1/*/*.lib
 Angel-3.2/Code/Angel/Libraries/gwen/Projects/linux/gmake/obj/
 Angel-3.2/Code/Angel/Scripting/Interfaces/AngelLuaWrapping.cpp
 Angel-3.2/Code/Angel/Scripting/Interfaces/inheritance.i
