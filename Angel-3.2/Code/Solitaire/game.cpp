@@ -1,5 +1,6 @@
 #include "game.h"
 #include "window.h"
+#include "backlightactor.h"
 
 Game::Game()
     : _board(nullptr)
@@ -30,26 +31,8 @@ Game::~Game()
 //    _board = new Board();
 //    _slogic.setNewBoard(moveInfo);
 //    _board->parseMoveInfo(moveInfo);
-
-    ParticleActor *pa = new ParticleActor();
-    pa->SetColor(1.0f, 1.0f, 0.0f);  //Sets the initial color of the particles.
-                                     // Since the image file we'll be using already
-                                     // has a color, we set this to pure white.
-
-    pa->SetSize(Vector2(0.2f, 0.2f)); //The size of each particle, in GL units
-    //pa->SetSprite("Resources/Images/PNG-cards-1.3/CLUB/2.png"); //The image file we want to use (otherwise
-                                                // it'll just be colored squares).
-    pa->SetMaxParticles(500); //The maximum number of particles this system will ever handle.
-    pa->SetParticlesPerSecond(100.0f); //Emission Rate
-    pa->SetParticleLifetime(1.5f); //How long each particles lasts before disappearing
-    pa->SetSpread(MathUtil::Pi / 360); //The angle in radians at which particles will be emitted.
-    pa->SetEndScale(2.0f); //If you want the particles to change size over their lifetimes
-    pa->SetEndColor(Color(1.0f, 1.0f, 1.0f, 0.0f)); //Our particles disappear over time
-    pa->SetSpeedRange(3.0f, 4.0f); //The minimum and maximum range of speeds (so you can have
-                                   // some variation).
-    pa->SetGravity(Vector2::Zero); //You can pull the particles in a particular direction (default is
-                                   // downwards, so zero it out if you need to).
-    theWorld.Add(pa);
+    BacklightActor backlightActor;
+    theWorld.Add(&backlightActor);
 
     auto t = new TextActor("Console", "Here's a ParticleActor. (Try moving and clicking the mouse!)");
     t->SetPosition(0, 3.5);

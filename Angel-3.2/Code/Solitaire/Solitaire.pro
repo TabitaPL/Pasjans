@@ -12,7 +12,8 @@ SOURCES += \
     moveinfo.cpp \
     card.cpp \
     window.cpp \
-    cardactor.cpp
+    cardactor.cpp \
+    backlightactor.cpp
 
 HEADERS += \
     board.h \
@@ -22,7 +23,8 @@ HEADERS += \
     card.h \
     AngelHeader.h \
     window.h \
-    cardactor.h
+    cardactor.h \
+    backlightactor.h
 
 resources.files = Resources/*
 resources.path  = $$OUT_PWD/Resources/
