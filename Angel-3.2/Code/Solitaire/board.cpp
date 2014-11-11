@@ -139,33 +139,53 @@ void Board::MouseDownEvent(Vec2i screenCoordinates, MouseButtonInput button)
 {
     Vector2 clickedPlace = MathUtil::ScreenToWorld(screenCoordinates.X, screenCoordinates.Y);
     ActorSet cards = theTagList.GetObjectsTagged("card");
+	ActorSet frames = theTagList.GetObjectsTagged("frame");
 
-    for (Actor* card : cards )
-    {
-        BoundingBox boundingBox = card->GetBoundingBox();
-        if (boundingBox.Intersects(clickedPlace, 0))
-        {
-            if (_nameOfClickedCard == "")
-            {
-                _nameOfClickedCard = card->GetName();
-                card->SetColor(Color(0.0, 0.0, 1.0));
-            }
-            else
-            {
-                Actor *previous = Actor::GetNamed(_nameOfClickedCard);
-                //swap graphic of previous and current
-                if (previous != nullptr)
-                {
-                    previous->MoveTo(card->GetPosition(), 1.0);
-                    card->MoveTo(previous->GetPosition(), 1.0);
-                    _nameOfClickedCard = "";
-                    previous->SetColor(Color(1.0, 1.0, 1.0));
-                }
-                break;
-            }
-            break;
-        }
-    }
+	//if this is first click get clicked card
+	if (_nameOfClickedCard == "")
+	{
+		for (Actor* card : cards)
+		{
+			BoundingBox boundingBox = card->GetBoundingBox();
+			if (boundingBox.Intersects(clickedPlace, 0))
+			{
+				_nameOfClickedCard = card->GetName();
+				card->SetColor(Color(0.0, 0.0, 1.0));
+			}
+		}
+	}
+	else //this is a second "click"
+	{
+		Actor *previous = Actor::GetNamed(_nameOfClickedCard);
+		//if this is second click check cards and frames (if not cards)
+		for (Actor* card : cards)
+		{
+			BoundingBox boundingBox = card->GetBoundingBox();
+			if (boundingBox.Intersects(clickedPlace, 0))
+			{
+				previous->MoveTo(card->GetPosition(), 1.0);
+				card->MoveTo(previous->GetPosition(), 1.0);
+				_nameOfClickedCard = "";
+				previous->SetColor(Color(1.0, 1.0, 1.0));
+			}
+			else
+			{
+				//we did not find any card. It has to be frame or nothing.
+				for (Actor* frame : frames)
+				{
+					BoundingBox boundingBox = frame->GetBoundingBox();
+					if (boundingBox.Intersects(clickedPlace, 0))
+					{
+						previous->MoveTo(frame->GetPosition(), 1.0);
+						_nameOfClickedCard = "";
+						previous->SetColor(Color(1.0, 1.0, 1.0));
+					}
+				}
+			}
+		}
+
+	}
+
 }
 
 void Board::registerCardFilenames()
